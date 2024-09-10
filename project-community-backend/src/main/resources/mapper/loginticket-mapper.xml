@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.community.mapper.LoginTicketMapper">
+
+    <sql id="selectedFields">
+        id, user_id, ticket, status, create_time, expire_at, last_time
+    </sql>
+
+    <sql id="insertedFields">
+        user_id, ticket, status, create_time, expire_at, last_time
+    </sql>
+
+    <select id="selectLoginTicketByUserId">
+        select <include refid="selectedFields"/>
+        from login_ticket
+        where user_id = #{entityType}
+    </select>
+    <select id="selectLoginTicketByTicket">
+        select <include refid="selectedFields"/>
+        from login_ticket
+        where ticket = #{ticket}
+    </select>
+
+    <insert id="insertLoginTicket">
+        insert into login_ticket(<include refid="insertedFields"/>)
+        values (#{userId}, #{ticket}, #{status}, #{createTime}, #{expireAt}, #{lastTime})
+    </insert>
+
+    <update id="updateLoginTicket">
+        update login_ticket
+        set ticket = #{ticket}, status = #{status}, expire_at = #{expireAt}, last_time = #{lastTime}
+        where id = #{id}
+    </update>
+
+</mapper>
